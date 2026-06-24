@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server"
 import { getServerSession } from "@/lib/auth"
 
+export { dynamic, runtime } from "@/lib/route-config"
+
 /**
  * Debug endpoint to check which AI services are configured
  * This helps users understand what API keys they need to add
