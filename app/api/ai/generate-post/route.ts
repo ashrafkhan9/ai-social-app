@@ -114,14 +114,16 @@ export async function POST(request: Request) {
     const hasGroq = !!groqKey && groqKey.length > 0
     const hasGemini = !!geminiKey && geminiKey.length > 0
     const hasHuggingFace = !!huggingfaceKey && huggingfaceKey.length > 0
+    const keyStatus = (key: string | undefined, hasKey: boolean) =>
+      hasKey && key ? `✓ Found (${key.substring(0, 10)}...)` : "✗ NOT FOUND"
     
     // Detailed logging for debugging
     console.log("=== AI Service Configuration Check ===")
     console.log("Environment variables check:", {
-      OPENAI_API_KEY: hasOpenAI ? `✓ Found (${openaiKey.substring(0, 10)}...)` : "✗ NOT FOUND",
-      GROQ_API_KEY: hasGroq ? `✓ Found (${groqKey.substring(0, 10)}...)` : "✗ NOT FOUND",
-      GEMINI_API_KEY: hasGemini ? `✓ Found (${geminiKey.substring(0, 10)}...)` : "✗ NOT FOUND",
-      HUGGINGFACE_API_KEY: hasHuggingFace ? `✓ Found (${huggingfaceKey.substring(0, 10)}...)` : "✗ NOT FOUND"
+      OPENAI_API_KEY: keyStatus(openaiKey, hasOpenAI),
+      GROQ_API_KEY: keyStatus(groqKey, hasGroq),
+      GEMINI_API_KEY: keyStatus(geminiKey, hasGemini),
+      HUGGINGFACE_API_KEY: keyStatus(huggingfaceKey, hasHuggingFace)
     })
     console.log("Service availability:", {
       OpenAI: hasOpenAI ? "✓ Configured" : "✗ Not configured",
@@ -316,4 +318,3 @@ See FREE_AI_KEYS_GUIDE.md for detailed instructions.`
     )
   }
 }
-

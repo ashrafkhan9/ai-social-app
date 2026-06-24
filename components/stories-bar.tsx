@@ -18,7 +18,19 @@ interface StoryGroup {
     id: string
     mediaUrl: string
     mediaType: "image" | "video"
+    text?: string | null
+    textColor?: string | null
+    textPosition?: string | null
+    createdAt: string
+    author: {
+      id: string
+      name: string | null
+      username: string | null
+      image: string | null
+      isVerified: boolean
+    }
     viewed: boolean
+    viewCount: number
   }>
 }
 
@@ -148,4 +160,3 @@ export function StoriesBar() {
     </>
   )
 }
-

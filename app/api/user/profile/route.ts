@@ -23,7 +23,16 @@ export async function PATCH(request: Request) {
     const data = updateProfileSchema.parse(body)
 
     // Check if username is taken (if changing)
-    if (data.username && data.username !== session.user.username) {
+    const currentUser = await prisma.user.findUnique({
+      where: { id: session.user.id },
+      select: { username: true },
+    })
+
+    if (!currentUser) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 })
+    }
+
+    if (data.username && data.username !== currentUser.username) {
       const existingUser = await prisma.user.findUnique({
         where: { username: data.username },
       })

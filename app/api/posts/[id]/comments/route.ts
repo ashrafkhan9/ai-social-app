@@ -148,8 +148,6 @@ export async function GET(
           },
           orderBy: { createdAt: "asc" },
         },
-      },
-      include: {
         author: {
           select: {
             id: true,
