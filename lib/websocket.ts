@@ -15,6 +15,8 @@ export function useWebSocketNotifications(
     if (!session?.user?.id) return
 
     const pusher = getPusherClient()
+    if (!pusher) return
+
     const channelName = `private-user-${session.user.id}`
     const channel = pusher.subscribe(channelName)
     channelRef.current = channel
@@ -33,10 +35,12 @@ export function useWebSocketNotifications(
 
 export function getConversationChannel(conversationId: string) {
   const pusher = getPusherClient()
+  if (!pusher) return null
   return pusher.subscribe(`private-conversation-${conversationId}`)
 }
 
 export function leaveConversationChannel(conversationId: string) {
   const pusher = getPusherClient()
+  if (!pusher) return
   pusher.unsubscribe(`private-conversation-${conversationId}`)
 }

@@ -85,6 +85,7 @@ export default function MessagesPage() {
       
       // Subscribe to Pusher conversation channel
       const channel = getConversationChannel(selectedConversation)
+      if (!channel) return
 
       channel.bind("user-typing", (data: { userId: string; isTyping: boolean }) => {
         if (data.userId !== session.user.id) {
